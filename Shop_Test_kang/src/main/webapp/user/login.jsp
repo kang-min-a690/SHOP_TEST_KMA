@@ -22,6 +22,7 @@
 		}
 		
 		// 아이디 저장 쿠키 가져오기
+		String rememberId = request.getParameter("remember-id");
 		
 		
 	%>

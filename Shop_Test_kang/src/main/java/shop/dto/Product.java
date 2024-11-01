@@ -32,6 +32,7 @@ public class Product implements Serializable {
 	private String userId;			// 회원ID
 	private int orderNo;			// 주문번호
 	private String type;			// 입출고 타입
+	private int amount;				// 입출고량
 	
 	public Product() {
 		
@@ -153,6 +154,14 @@ public class Product implements Serializable {
 				+ description + ", manufacturer=" + manufacturer + ", category=" + category + ", unitsInStock="
 				+ unitsInStock + ", condition=" + condition + ", file=" + file + ", quantity=" + quantity + ", userId="
 				+ userId + ", orderNo=" + orderNo + ", type=" + type + "]";
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 	
 
