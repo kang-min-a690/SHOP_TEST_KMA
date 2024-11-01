@@ -9,37 +9,118 @@ import shop.dto.User;
 
 public class UserRepository extends JDBConnection {
 	
+	
+	
+	public String table() {
+		
+		return "user";
+	}
+	
 	/**
 	 * 회원 등록
 	 * @param user
 	 * @return
 	 */
 	public int insert(User user) {
+		int result = 0;	
+		String sql = "INSERT INTO " + table() + " ( "
+				   + " id "
+				   + " ,password "
+				   + " ,name "
+				   + " ,gender "
+				   + " ,birth "
+				   + " ,mail "
+				   + " ,phone "
+				   + " ,address "
+				   + " ,regist_day )"
+				   + " VALUES( ? , ? , ? , ? , ? , ? , ? , ? , NOW() ) " // reg_date는 현재 날짜
+				   ;
 		
+		try {
+			psmt = con.prepareStatement(sql);
+			psmt.setString(1, user.getId());
+			psmt.setString(2, user.getPassword());
+			psmt.setString(3, user.getName());
+			psmt.setString(4, user.getGender());
+			psmt.setString(5, user.getBirth());
+			psmt.setString(6, user.getMail());
+			psmt.setString(7, user.getPhone());
+			psmt.setString(8, user.getAddress());
+			result = psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// 회원등록시 에외발생 코드
+			System.err.println("회원 등록 시, 예외 발생");
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	
 	/**
-	 * 로그인을 위한 사용자 조회
+	 * 로그인을 위한 사용자 조회 (로그인)
 	 * @param id
 	 * @param pw
 	 * @return
 	 */
 	public User login(String id, String pw) {
+		 User user = null ; // 유저 정보를 담을 user (근데 값이 아직 없어야 하니 null)
+		 
+		 String SQL = " SELECT * FROM " + table()
+		 			+ " WHERE id = ? AND password = ? "	//SQL에 있는 불러올 내용 적기
+		 			;
 		
+		 try {
+			 psmt = con.prepareStatement(SQL);
+			 psmt.setString(1, id);		// 첫번째 ? 에 값 입력
+			 psmt.setString(2, pw);		// 두번째 ? 에 값 입력
+			 rs = psmt.executeQuery();
+			 
+			 
+			 if(rs.next()) { // 위에 작성한게 next(JDBConn..그냥 DB 에 있는지 확인)
+				 user = new User();	// 뉴 User객체 생성
+				 user.setId(rs.getString("id"));
+				 user.setPassword(rs.getString("password"));
+//				 user.setName(rs.getString("name")) 이건 필요한지 아닌지 모르겠음..ㅜ
+			 }
+		 } catch (Exception e) {
+			 System.err.println("로그인 시 예외 발생...");
+			 e.printStackTrace();
+		 }
+		
+		return user;	// user 반환 ( null 일 수도 있음)
 	}
 	
 	
 	
 	
 	/**
-	 * 로그인을 위한 사용자 조회
+	 * 로그인을 위한 사용자 조회 SELECT
 	 * @param id
-	 * @param pw
 	 * @return
 	 */
 	public User getUserById(String id) {
+		User user = null;
 		
+		String SQL = " SELECT * FROM " + table()
+				   + " WHERE id = ? "; // 회원 아이디는 아직 모르니까 ? 작성
+		
+		try {
+			psmt = con.prepareStatement(SQL);
+			psmt.setString(1, id );		// 첫번째 ? 불러오기
+			rs = psmt.executeQuery();
+			
+			if( rs.next() ) {
+				user = new User(); // 뉴 User 객체 생성
+				user.setId(rs.getString("id"));
+			}
+			
+		}catch (Exception e) {
+			System.err.println("사용자 조회시 예외 발생...");
+			e.printStackTrace();
+		}
+		
+		return user;
 	}
 	
 	
@@ -49,7 +130,38 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public int update(User user) {
+		int result = 0;
 		
+		// Update 테이블명 SET + -> WHERE  ? 수정할거 넣기
+		String SQL = " UPDATE " + table() + " SET "
+				   + " password = ? "
+				   + " ,name = ? "
+				   + " ,gender = ? "
+				   + " ,birth = ? "
+				   + " ,mail = ? "
+				   + " ,phone = ? "
+				   + " ,address = ? "
+				   + " WHERE id = ? "
+				   ;
+		try {
+			psmt = con.prepareStatement(SQL);
+			psmt.setString(1, user.getPassword());
+			psmt.setString(2, user.getName());
+			psmt.setString(3, user.getGender());
+			psmt.setString(4, user.getBirth());
+			psmt.setString(5, user.getMail());
+			psmt.setString(6, user.getPhone());
+			psmt.setString(7, user.getAddress());
+			psmt.setString(8, user.getId());
+			
+			result = psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.err.println("회원 정보 수정시 예외 발생...");
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 
@@ -59,7 +171,24 @@ public class UserRepository extends JDBConnection {
 	 * @return
 	 */
 	public int delete(String id) {
+		int result = 0;
 		
+		//DELETE 작성
+		String SQL = " DELETE FROM " + table()
+				   + " WHERE id = ? "
+				   ;
+		try {
+			psmt = con.prepareStatement(SQL);
+			psmt.setString(1, id);
+			
+			result = psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			System.err.println("회원 삭제 시 예외 발생...");
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 	
 	/**
