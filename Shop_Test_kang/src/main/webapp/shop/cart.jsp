@@ -7,10 +7,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title></title>
+	<meta charset="UTF-8"> 
+	<title>장바구니</title>
+	<jsp:include page="/layout/meta.jsp"/>
+	<jsp:include page="/layout/link.jsp"/>
 </head>
 <body>
-
+	<jsp:include page="/layout/header.jsp"/>
+	<%-- [Contents] ######################################################### --%>
+	<form>
+	
+	
+	</form>
+	<%-- [Contents] #################################################################### --%>
+	<jsp:include page="/layout/footer.jsp" />
+	<jsp:include page="/layout/script.jsp" />
+	<%-- JS 링크 파일 --%>
+	<script src="<%=request.getContextPath() %>">/static/js/validation.js</script>
 </body>
 </html>

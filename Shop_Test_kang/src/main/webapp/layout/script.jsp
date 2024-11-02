@@ -4,6 +4,8 @@
 <!-- <script src="../static/js/validation.js"></script> -->			<!-- 상대경로 -->
 <%-- <script src="/Chap08/static/js/validation.js"></script> --%>	<!-- 절대경로 -->
 <script src="<%= request.getContextPath() %>/static/js/validation.js"></script>
+<%-- jQuery --%>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 
 
 
