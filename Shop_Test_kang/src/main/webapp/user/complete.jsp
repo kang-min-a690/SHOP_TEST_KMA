@@ -35,7 +35,6 @@
 	</div>
 	
 	<div class="container mb-5">
-		<!-- 추가적인 내용이 필요하다면 여기에 작성 -->
 	</div>
 	
 	<jsp:include page="/layout/footer.jsp" />
