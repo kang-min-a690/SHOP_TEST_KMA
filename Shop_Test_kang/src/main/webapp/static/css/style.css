@@ -54,38 +54,6 @@ body {
 	bottom: 0;
 }
 
-/*------------------------------장바구니-----------------------------------------  */
-.button .tab {
-	display: inline-block;
-	justify-content: space-between;
-}
-
-.deleteBtn {
-	color: white;
-	background-color: #e14040;
-	border: none;
-	border-radius: 5px;
-}
-.orderBtn {	
-	color: white;
-	background-color: #0a58cae0;
-	border: none;
-	border-radius: 5px;
-}
-.jumbotron {
-	padding-top: 50px;
-	padding-bottom: 50px;
-}
-
-
-
-
-
-
-
-
-
-
 /* 입력 폼 반응형 */
 /* 768px 이하 화면 크기에 대한 스타일 */
 @media (max-width: 768px) {
@@ -115,12 +83,12 @@ body {
 
 }
 
+.container mb-5 h2{
+	text-align: center;
+}
 
-
-
-
-
-
-
-
-
+.container mb-5 a{
+	text-align: center;
+	align-content: center;
+    align-items: center;
+}

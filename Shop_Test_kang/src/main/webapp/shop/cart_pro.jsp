@@ -1,26 +1,39 @@
-<%@page import="shop.dto.Product"%>
 <%@page import="java.util.ArrayList"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+<%@page import="java.util.List"%>
+<%@page import="shop.dto.Product"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/layout/meta.jsp" %>
+<jsp:useBean id="productDAO" class="shop.dao.ProductRepository" />
 <%
-	int sum = 0;
+    String loginId = (String) session.getAttribute("loginId");
+    String productId = request.getParameter("id");
+    Product product = productDAO.getProductById(productId);
+    
+    List<Product> productList = (List<Product>) session.getAttribute(
+        loginId != null ? loginId : "user"
+    );
+    
+    if (productList == null) {
+        productList = new ArrayList<>();
+    }
+    
+    boolean productExists = false;
+    
+    for (Product test : productList) {
+        if (test.getProductId().equals(product.getProductId())) {
+            test.setQuantity(test.getQuantity() + 1);
+            productExists = true;
+            break;
+        }
+    }
+    
+    if (!productExists) {
+        product.setQuantity(1);
+        productList.add(product);
+    }
+    
+    session.setAttribute(loginId != null ? loginId : "user", productList);
+    
+    response.sendRedirect(request.getContextPath() + "/shop/products.jsp");
 
-	// 세션에서 cartlist 속성 가져오기
-	ArrayList<Product> cartList = (ArrayList<Product>) session.getAttribute("cartlist");
-	
-	if (cartList != null && !cartList.isEmpty()) {
-		for (Product product : cartList) {
-			// 장바구니 목록 하나씩 출력하기
-			int total = product.getUnitPrice() * product.getQuantity();
-			sum += total;
-		}
-	} else {
-
-	}
 %>
-<%-- <p>총 합계: <%= sum %> 원</p> --%>
