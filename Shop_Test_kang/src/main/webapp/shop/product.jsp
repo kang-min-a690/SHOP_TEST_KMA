@@ -9,12 +9,15 @@
     <title>상품 정보</title>
     <%@ include file="/layout/meta.jsp" %>
     <%@ include file="/layout/link.jsp" %>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <%
         String id = request.getParameter("id");
         Product product = productDAO.getProductById(id);
     %>
+    
     <jsp:include page="/layout/header.jsp" />
     
     <div class="px-4 py-5 my-5 text-center">
@@ -30,7 +33,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <img src="<%= root %>/shop/img?id=<%= product.getProductId() %>" class="w-100 p-2" alt="상품 이미지">
+                <img src="<%=root %>/shop/img?id=<%= product.getProductId() %>" class="w-100 p-2" alt="상품 이미지">
             </div>
             <div class="col-md-6">
                 <h3 class="mb-5"><%= product.getName() %></h3>
@@ -62,7 +65,7 @@
                         </tr>
                         <tr>
                             <td>가격 :</td>
-                            <td><%= product.getUnitPrice() %></td>
+                            <td><%= product.getUnitPrice() %> 원</td> 
                         </tr>
                     </tbody>
                 </table>
@@ -84,5 +87,8 @@
     
     <jsp:include page="/layout/footer.jsp" />
     <jsp:include page="/layout/script.jsp" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
