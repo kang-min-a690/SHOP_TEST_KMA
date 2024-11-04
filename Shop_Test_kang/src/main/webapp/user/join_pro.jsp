@@ -27,8 +27,13 @@
 	user.setBirth(birth);
 	
 	// 이메일 입력
-	String email = request.getParameter("email");
+	// 이메일 입력 처리
+	String email1 = request.getParameter("email1");
+	String email2 = request.getParameter("email2");
+	String email = email1 + "@" + email2;
 	user.setMail(email);
+
+	
 	
 	//폰
 	user.setPhone(request.getParameter("phone"));

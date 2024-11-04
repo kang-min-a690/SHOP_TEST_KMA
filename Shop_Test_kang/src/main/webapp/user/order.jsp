@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="shop.dao.UserRepository"%>
 <%@page import="shop.dto.User"%>
+<%@page import="java.sql.SQLException"%> <!-- SQLException import 추가 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,27 +12,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Shop</title>
-    <jsp:include page="/layout/meta.jsp" /> <jsp:include page="/layout/link.jsp" />
+    <jsp:include page="/layout/meta.jsp" /> 
+    <jsp:include page="/layout/link.jsp" />
 </head>
 <body>
-    <% String root = request.getContextPath(); %>
     <% 
+        String root = request.getContextPath();
         boolean login = (session.getAttribute("user") != null); // 로그인 상태 확인
         OrderRepository orderRepo = new OrderRepository();
         List<Product> orderList = new ArrayList<>();
         String orderPhone = null;
 
-        // 로그인한 경우
-        if (login) {
-            User user = (User) session.getAttribute("user");
-            orderList = orderRepo.list(user.getId()); // 회원의 주문 내역 조회
-        } else {
-            // 비회원 주문 조회를 위한 입력값 처리
-            orderPhone = request.getParameter("phone");
-            String orderPw = request.getParameter("orderPw");
-            if (orderPhone != null && orderPw != null) {
-                orderList = orderRepo.list(orderPhone, orderPw); // 비회원의 주문 내역 조회
+        try {
+            // 로그인한 경우
+            if (login) {
+                User user = (User) session.getAttribute("user");
+                orderList = orderRepo.list(user.getId()); // 회원의 주문 내역 조회
+            } else {
+                // 비회원 주문 조회를 위한 입력값 처리
+                orderPhone = request.getParameter("phone");
+                String orderPw = request.getParameter("orderPw");
+                if (orderPhone != null && orderPw != null) {
+                    orderList = orderRepo.list(orderPhone, orderPw); // 비회원의 주문 내역 조회
+                }
             }
+        } catch (Exception e) {  // SQLException 제거
+            e.printStackTrace();
+            out.println("<p>문제가 발생했습니다. 나중에 다시 시도해주세요.</p>");
         }
     %>
 

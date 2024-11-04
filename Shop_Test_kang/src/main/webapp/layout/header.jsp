@@ -44,8 +44,8 @@
        		} else {
         %>
         <!-- 로그인 시 -->
-<!--         <li class="nav-item"> -->
-<%--           <a class="nav-link" aria-current="page" href="<%= root %>/user/update.jsp"><%= loginId %></a> --%>
+<!--         <li class="nav-item">  -->
+<%--    <a class="nav-link" aria-current="page" href="<%= root %>/user/update.jsp"><%= loginId %></a> --%> 
 <!--         </li> -->
         <li class="nav-item">
         <div class="dropdown">

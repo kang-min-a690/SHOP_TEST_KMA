@@ -1,3 +1,4 @@
+<%@page import="java.net.URLEncoder"%>
 <%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -22,8 +23,6 @@
 		}
 		
 		// 아이디 저장 쿠키 가져오기
-		String rememberId = request.getParameter("remember-id");
-		
 		
 	%>
 	<jsp:include page="/layout/header.jsp" />
@@ -47,7 +46,12 @@
 	    <div class="form-check text-start my-3 d-flex justify-content-around">
 	    	<div class="item">
 	    	  <%
+	    	  	String rememberId = request.getParameter("remember-id");
+	    		Cookie cookieRememberId = new Cookie("remember-id", "");
+	    		Cookie cookieId = new Cookie("id", "");
 	    	  	if( rememberId != null && rememberId.equals("on") ) {
+	    	  		cookieRememberId.setValue( URLEncoder.encode(rememberId, "UTF-8") );
+	    			cookieId.setValue( URLEncoder.encode(loginId, "UTF-8") );
 	    	  %>
 			      <input class="form-check-input" type="checkbox" name="remember-id" id="flexCheckDefault1"
 			      		 checked>
@@ -87,11 +91,3 @@
 	<jsp:include page="/layout/script.jsp" />
 </body>
 </html>
-
-
-
-
-
-
-
-

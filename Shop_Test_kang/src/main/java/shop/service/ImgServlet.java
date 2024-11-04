@@ -92,8 +92,3 @@ public class ImgServlet extends HttpServlet {
 	}
 
 }
-
-
-
-
-

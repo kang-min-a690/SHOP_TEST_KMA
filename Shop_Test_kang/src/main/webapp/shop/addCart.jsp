@@ -1,12 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="shop.dto.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="shop.dto.Product"%>
+<%@page import="shop.dao.ProductRepository"%>
 <jsp:useBean id="productDAO" class="shop.dao.ProductRepository" />
 
 <%
@@ -17,8 +15,14 @@
     // 해당 상품 정보 가져오기
     Product product = productDAO.getProductById(productId);
     
+    if (product == null) {
+        // 상품이 없으면 오류 페이지로 리디렉션
+        response.sendRedirect("error.jsp?msg=상품을 찾을 수 없습니다.");
+        return;
+    }
+
     // 장바구니 리스트 가져오기
-    ArrayList<Product> cartList = (ArrayList<Product>) (loginId != null ? 
+    List<Product> cartList = (List<Product>) (loginId != null ? 
                                     session.getAttribute(loginId) : 
                                     session.getAttribute("user"));
     

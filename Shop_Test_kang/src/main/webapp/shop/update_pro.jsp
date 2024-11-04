@@ -1,6 +1,7 @@
-<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
-<%@page import="org.apache.commons.fileupload.FileUploadException"%>
 <%@page import="org.apache.commons.fileupload.FileItem"%>
+<%@page import="org.apache.commons.fileupload.FileUploadException"%>
+<%@page import="org.apache.commons.fileupload.disk.DiskFileItemFactory"%>
+<%@page import="org.apache.commons.fileupload.servlet.ServletFileUpload"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.io.File"%>
 <%@page import="java.util.List"%>
@@ -10,7 +11,7 @@
 <%@ include file="/layout/meta.jsp" %>
 <jsp:useBean id="productDAO" class="shop.dao.ProductRepository" />
 <%
-    request.setCharacterEncoding("UTF-8"); // 문자 인코딩 설정
+    request.setCharacterEncoding("UTF-8"); // 문자 인코딩 설정	
 
     Product product = new Product();
     String productId = "";
